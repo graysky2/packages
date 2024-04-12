@@ -7,7 +7,7 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=snort3
 PKG_VERSION:=3.1.84.0
-PKG_RELEASE:=1
+PKG_RELEASE:=2
 
 PKG_SOURCE:=$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://github.com/snort3/snort3/archive/refs/tags/
@@ -28,6 +28,7 @@ define Package/snort3
   DEPENDS:= \
 	    +(TARGET_x86||TARGET_x86_64):hyperscan-runtime \
 	    +(TARGET_x86||TARGET_x86_64):gperftools-runtime \
+	    +(TARGET_mediatek_filogic||TARGET_bcm27xx_bcm2711||TARGET_bcm27xx_bcm2712):vectorscan-runtime \
 	    +libstdcpp +libdaq3 +libdnet +libopenssl +libpcap +libpcre +libpthread \
 	    +libuuid +zlib +libhwloc +libtirpc @HAS_LUAJIT_ARCH +luajit +libatomic \
 	    +kmod-nft-queue +liblzma +ucode +ucode-mod-fs +ucode-mod-uci
@@ -49,6 +50,12 @@ ifdef CONFIG_TARGET_x86_64
 	CMAKE_OPTIONS += -DHS_INCLUDE_DIRS=$(STAGING_DIR)/usr/include/hs \
 			 -DENABLE_TCMALLOC=ON \
 			 -DTCMALLOC_LIBRARIES=$(STAGING_DIR)/usr/lib/libtcmalloc.so
+endif
+
+# Vectorscan only builds for certain subtargets
+#ifdef CONFIG_TARGET_mediatek_filogic||CONFIG_TARGET_bcm27xx_bcm2711||CONFIG_TARGET_bcm27xx_bcm2712
+ifdef CONFIG_TARGET_mediatek_filogic
+	CMAKE_OPTIONS += -DHS_INCLUDE_DIRS=$(STAGING_DIR)/usr/include/hs
 endif
 
 CMAKE_OPTIONS += \
