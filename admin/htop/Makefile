@@ -11,9 +11,9 @@ PKG_NAME:=htop
 PKG_VERSION:=3.4.0
 PKG_RELEASE:=1
 
-PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
-PKG_SOURCE_URL:=https://codeload.github.com/htop-dev/htop/tar.gz/$(PKG_VERSION)?
-PKG_HASH:=7a45cd93b393eaa5804a7e490d58d0940b1c74bb24ecff2ae7b5c49e7a3c1198
+PKG_SOURCE_PROTO:=git
+PKG_SOURCE_URL:=https://github.com/htop-dev/htop.git
+PKG_SOURCE_VERSION:=c802dc48f8ac17e7a32d9768161f5b57e91e876e
 
 PKG_LICENSE:=GPL-2.0-or-later
 PKG_LICENSE_FILES:=COPYING
