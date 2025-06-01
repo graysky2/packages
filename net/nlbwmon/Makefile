@@ -19,7 +19,7 @@ include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/cmake.mk
 
 CMAKE_OPTIONS += -DLIBNL_LIBRARY_TINY=ON
-TARGET_CFLAGS += -I$(STAGING_DIR)/usr/include/libnl-tiny
+TARGET_CFLAGS += -I$(STAGING_DIR)/usr/include/libnl-tiny -std=gnu17
 
 define Package/nlbwmon
   SECTION:=net
