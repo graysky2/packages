@@ -1,0 +1,52 @@
+From bf92523f6f4af479b02b69f957f32c1f1b2257be Mon Sep 17 00:00:00 2001
+From: graysky <therealgraysky AT proton DOT me>
+Date: Sun, 9 Nov 2025 06:48:05 -0500
+Subject: [PATCH 1/2] out_curses: remove really quit question, just exit
+
+Remove the "Really quit" dialog and just exit
+---
+ src/out_curses.c | 20 ++------------------
+ 1 file changed, 2 insertions(+), 18 deletions(-)
+
+--- a/src/out_curses.c
++++ b/src/out_curses.c
+@@ -1069,9 +1069,7 @@ static void curses_draw(void)
+ 
+ 	draw_statusbar();
+ 
+-	if (quit_mode)
+-		print_message(" Really Quit? (y/n) ");
+-	else if (print_help) {
++	if (print_help) {
+ 		if (help_page == 0)
+ 			draw_help();
+ #if 0
+@@ -1100,27 +1098,13 @@ static int handle_input(int ch)
+ 	switch (ch) 
+ 	{
+ 		case 'q':
+-			if (print_help)
+-				print_help = 0;
+-			else
+-				quit_mode = quit_mode ? 0 : 1;
+-			return 1;
++			exit(0);
+ 
+ 		case 0x1b:
+ 			quit_mode = 0;
+ 			print_help = 0;
+ 			return 1;
+ 
+-		case 'y':
+-			if (quit_mode)
+-				exit(0);
+-			break;
+-
+-		case 'n':
+-			if (quit_mode)
+-				quit_mode = 0;
+-			return 1;
+-
+ 		case 12:
+ 		case KEY_CLEAR:
+ #ifdef HAVE_REDRAWWIN
